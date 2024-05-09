@@ -108,9 +108,17 @@ app.post("/signin", async (req, res) => {
             return;
         }
 
-        if (isEmailExists.password === password) {
-            res.status(200).json({ message: "valid user", user: isEmailExists });
+        if (isEmailExists.password !== password) {
+            res.status(402).json({
+                error: "password is incorrent"
+            })
+
         }
+
+        res.json({
+            message: 'valid user',
+            user: isEmailExists
+        })
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error.message });
