@@ -1,7 +1,8 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DrawerTrigger, DrawerContent, Drawer } from "@/components/ui/drawer";
-import ButtonComp from "@/components/buttonComp";
+import nookie from "nookies";
 
 export default function Component() {
   return (
@@ -37,7 +38,7 @@ export default function Component() {
             <Button variant="destructive">Logout</Button>
           </Link>
         </nav>
-        <Drawer className="md:hidden">
+        <Drawer closeThreshold={1024}>
           <DrawerTrigger asChild>
             <Button className="md:hidden" size="icon" variant="outline">
               <svg
@@ -84,10 +85,10 @@ export default function Component() {
                   href="#"
                 >
                   {/*  <Button variant="outline">Logout</Button> */}
-                  <ButtonComp
+                  <Button
                     name="Logout"
                     variant="destructive"
-                    path="/signin"
+                    onClick={() => nookie.destroy({}, "userId")}
                   />
                 </Link>
               </nav>

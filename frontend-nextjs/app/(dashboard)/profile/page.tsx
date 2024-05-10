@@ -7,14 +7,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import { parseCookies } from "nookies";
 
 export default function Component() {
-  const [currentInfo, setCurentInfo] = useState({
-    userId: localStorage.getItem("userId"),
-    username: localStorage.getItem("username"),
-    email: localStorage.getItem("email"),
-    bio: `
-Software Engineer at Free-domainia Inc.`,
+  const cookies = parseCookies();
+  const [currentInfo, setCurentInfo] = useState<{
+    userId: string | undefined;
+    username: string | undefined;
+    email: string | undefined;
+    bio: string | "software engineer at Free-domainia";
+  }>({
+    userId: cookies["userId"],
+    username: cookies["username"],
+    email: cookies["email"],
+    bio: cookies["bio"],
   });
   const [info, setInfo] = useState({
     userId: localStorage.getItem("userId"),

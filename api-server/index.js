@@ -11,7 +11,7 @@ require('dotenv').config();
 
 
 const app = express()
-const PORT = 9000
+const PORT = 9001
 
 app.use(cors())
 
@@ -20,7 +20,9 @@ const prisma = new PrismaClient()
 const redisUri = process.env.redisUri
 const subscriber = new Redis(redisUri)
 
-const io = new Server({ cors: '*' })
+const server = app.listen(PORT, () => { console.log(`Socket and express started at ${PORT}`); })
+
+const io = new Server(server, { cors: '*' })
 
 io.on('connection', socket => {
     socket.on('subscribe', channel => {
@@ -32,10 +34,10 @@ io.on('connection', socket => {
 io.listen(9002, () => console.log('Socket Server 9002'))
 
 const ecsClient = new ECSClient({
-    region: process.env.region,
+    region: 'us-east-1',
     credentials: {
-        accessKeyId: process.env.accessKeyId,
-        secretAccessKey: process.env.secretAccessKey
+        accessKeyId: 'AKIA5FTY7AUERQBQCNGI',
+        secretAccessKey: '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'
     }
 })
 
@@ -110,9 +112,9 @@ app.post("/signin", async (req, res) => {
 
         if (isEmailExists.password !== password) {
             res.status(402).json({
-                error: "password is incorrent"
+                error: "password is incorrect"
             })
-
+            return;
         }
 
         res.json({
@@ -297,4 +299,3 @@ async function initRedisSubscribe() {
 
 initRedisSubscribe()
 
-app.listen(PORT, () => console.log(`API Server Running..${PORT}`))

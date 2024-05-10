@@ -8,8 +8,9 @@ import { Fira_Code } from "next/font/google";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { LampContainer } from "@/components/ui/lamp";
+import nookies from "nookies";
 
-const socket = io("http://localhost:9002");
+const socket = io(process.env.BACKEND_URL!);
 
 const firaCode = Fira_Code({ subsets: ["latin"] });
 
@@ -38,10 +39,10 @@ export default function Home() {
   const handleClickDeploy = useCallback(async () => {
     setLoading(true);
 
-    const { data } = await axios.post(`http://localhost:9000/project`, {
+    const { data } = await axios.post(`${process.env.BACKEND_URL}/project`, {
       gitURL: repoURL,
       slug: projectId,
-      userId: localStorage.getItem("userId"),
+      userId: nookies.get({}, "userId"),
     });
 
     if (data && data.data) {

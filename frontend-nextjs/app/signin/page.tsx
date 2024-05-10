@@ -14,6 +14,8 @@ import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import axios from "axios";
 import { Loader } from "lucide-react";
+import { toast } from "sonner";
+import nookies from "nookies";
 
 export default function Signin() {
   const router = useRouter();
@@ -25,15 +27,29 @@ export default function Signin() {
 
   const handleSubmit = useCallback(async () => {
     try {
+      if (!data.email || !data.password) {
+        toast.error("Some fields are empty");
+        return;
+      }
       setLoading(true);
       const resp = await axios.post(`${process.env.BACKEND_URL}/signin`, data);
-      if (resp) console.log(resp);
+      console.log(resp);
+      if (!resp) {
+        throw new Error("");
+        return;
+      }
+      nookies.set({}, "userId", resp.data.user.id);
+      nookies.set({}, "email", resp.data.user.email);
+      nookies.set({}, "username", resp.data.user.username);
+      nookies.set({}, "bio", resp.data.user.bio);
+
       setLoading(false);
-    } catch (error) {
+      router.push("/home");
+    } catch (error: any) {
+      setLoading(false);
       console.log(error);
-      setLoading(false);
     }
-  }, [data]);
+  }, [data, router]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">

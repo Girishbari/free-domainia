@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import { Loader } from "lucide-react";
 import axios from "axios";
+import { toast } from "sonner";
 
 export default function SignUp() {
   const router = useRouter();
@@ -26,15 +27,20 @@ export default function SignUp() {
 
   const handleSubmit = useCallback(async () => {
     try {
+      if (!data.email || !data.password || !data.username) {
+        toast.error("Some fields are empty");
+        return;
+      }
       setLoading(true);
-      const resp = await axios.post(`http://localhost:9000/signup`, data);
-      if (resp) console.log(resp);
+      const resp = await axios.post(`${process.env.BACKEND_URL}/signup`, data);
+      if (resp.status !== 201) console.log(resp.data);
       setLoading(false);
+      router.push("/signin");
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
-  }, [data]);
+  }, [data, router]);
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <Card className="mx-auto  max-w-sm">

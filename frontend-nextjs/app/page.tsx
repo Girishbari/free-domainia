@@ -2,7 +2,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import ButtonComp from "@/components/buttonComp";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const World = dynamic(
   () => import("@/components/ui/globe").then((m) => m.World),
@@ -12,6 +13,8 @@ const World = dynamic(
 );
 
 export default function GlobeDemo() {
+  const router = useRouter();
+
   const globeConfig = {
     pointSize: 4,
     globeColor: "#062056",
@@ -415,11 +418,14 @@ export default function GlobeDemo() {
           }}
           className="div flex flex-col justify-center items-center md: mb-5"
         >
-          <ButtonComp
+          <Button
             name="Get Started Now"
             variant="secondary"
-            path="/signin"
-          />
+            className=""
+            onClick={() => router.push("/signin")}
+          >
+            Get Started{" "}
+          </Button>
           <h2 className="text-center text-xl md:text-4xl font-bold text-black dark:text-white">
             We let you share your project <br /> to world
           </h2>
@@ -427,7 +433,7 @@ export default function GlobeDemo() {
             Deployment made easy, only on free-domainia{" "}
           </p>
         </motion.div>
-        <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40" />
+        <div className="absolute w-full bottom-0 inset-x-0 h-40 bg-gradient-to-b pointer-events-none select-none from-transparent dark:to-black to-white z-40 mt-5" />
         <div className="absolute w-full -bottom-20 h-72 md:h-full z-10">
           <World data={sampleArcs} globeConfig={globeConfig} />
         </div>

@@ -6,7 +6,7 @@ const app = express()
 const PORT = 8000
 
 
-const BASE_PATH = process.env.BASE_PATH
+const BASE_PATH = 'https://free-domainia-2.s3.amazonaws.com/__outputs'
 
 const proxy = httpProxy.createProxy()
 
