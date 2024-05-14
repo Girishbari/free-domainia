@@ -3,14 +3,22 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DrawerTrigger, DrawerContent, Drawer } from "@/components/ui/drawer";
 import nookie from "nookies";
+import { useRouter } from "next/navigation";
 
 export default function Component() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    nookie.destroy({}, "userId");
+    router.push("/signin");
+  };
+
   return (
     <>
       <header className="flex items-center justify-between px-4 py-3 bg-white shadow-sm dark:bg-gray-900 ">
         <Link className="flex items-center gap-2" href="#">
           <MountainIcon className="h-6 w-6" />
-          <span className="text-lg font-semibold">Acme Inc</span>
+          <span className="text-lg font-semibold">Free Domainia</span>
         </Link>
         <nav className="hidden md:flex items-center gap-4  ">
           <Link
@@ -35,7 +43,9 @@ export default function Component() {
             className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 cursor-pointer"
             href="#"
           >
-            <Button variant="destructive">Logout</Button>
+            <Button variant="destructive" onClick={() => handleLogout}>
+              Logout
+            </Button>
           </Link>
         </nav>
         <Drawer closeThreshold={1024}>
@@ -59,7 +69,7 @@ export default function Component() {
             <div className="flex flex-col items-start gap-6 p-6">
               <Link className="text-xl font-semibold" href="#">
                 <MountainIcon className="h-6 w-6 mr-2" />
-                Acme Inc
+                Free Domainia
               </Link>
               <nav className="grid gap-4">
                 <Link
@@ -70,13 +80,13 @@ export default function Component() {
                 </Link>
                 <Link
                   className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                  href="/Projects"
+                  href="/projects"
                 >
                   Projects
                 </Link>
                 <Link
                   className="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                  href="/Profile"
+                  href="/profile"
                 >
                   Profile
                 </Link>
@@ -88,8 +98,10 @@ export default function Component() {
                   <Button
                     name="Logout"
                     variant="destructive"
-                    onClick={() => nookie.destroy({}, "userId")}
-                  />
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </Button>
                 </Link>
               </nav>
             </div>

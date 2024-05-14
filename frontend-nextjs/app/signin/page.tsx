@@ -34,18 +34,20 @@ export default function Signin() {
       setLoading(true);
       const resp = await axios.post(`${process.env.BACKEND_URL}/signin`, data);
       console.log(resp);
-      if (!resp) {
-        throw new Error("");
+      if (resp.status != 200) {
+        throw new Error(resp.data);
         return;
       }
+
       nookies.set({}, "userId", resp.data.user.id);
-      nookies.set({}, "email", resp.data.user.email);
-      nookies.set({}, "username", resp.data.user.username);
-      nookies.set({}, "bio", resp.data.user.bio);
+      localStorage.setItem("email", resp.data.user.email);
+      localStorage.setItem("bio", resp.data.user.bio);
+      localStorage.setItem("username", resp.data.user.username);
 
       setLoading(false);
       router.push("/home");
     } catch (error: any) {
+      toast.error(error.response.data.message);
       setLoading(false);
       console.log(error);
     }

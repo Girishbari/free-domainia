@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { useRouter } from "next/router";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -11,13 +12,13 @@ export function middleware(request: NextRequest) {
   let isIdAvailable: string =
     String(request.cookies.get("userId")?.value) || "";
 
-  if (isPublicPages && isIdAvailable) {
+ /*  if (isIdAvailable && isPublicPages) {
     return NextResponse.redirect(new URL("/home", request.nextUrl));
   }
 
-  if (isPrivatePages && !isIdAvailable) {
+  if (!isIdAvailable && isPrivatePages) {
     return NextResponse.redirect(new URL("/signin", request.nextUrl));
-  }
+  } */
 }
 
 export const config = {

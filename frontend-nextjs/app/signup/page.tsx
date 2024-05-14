@@ -33,11 +33,15 @@ export default function SignUp() {
       }
       setLoading(true);
       const resp = await axios.post(`${process.env.BACKEND_URL}/signup`, data);
-      if (resp.status !== 201) console.log(resp.data);
+      if (resp.status !== 200) throw new Error(resp.data.message);
+      console.log(resp);
+      toast.success(resp.data.message);
       setLoading(false);
       router.push("/signin");
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      toast.error(error);
+
       setLoading(false);
     }
   }, [data, router]);

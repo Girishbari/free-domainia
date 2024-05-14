@@ -1,0 +1,25 @@
+{
+  "name": "deploy-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npx tsc && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.556.0",
+    "@prisma/client": "^5.13.0",
+    "@types/mime-types": "^2.1.4",
+    "dotenv": "^16.4.5",
+    "mime-types": "^2.1.35",
+    "redis": "^4.6.13",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7"
+  }
+}
