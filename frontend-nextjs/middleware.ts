@@ -9,16 +9,19 @@ export function middleware(request: NextRequest) {
   const isPrivatePages =
     pathname === "/home" || pathname === "/projects" || pathname === "/profile";
 
-  let isIdAvailable: string =
-    String(request.cookies.get("userId")?.value) || "";
+  let isIdAvailable: string = request.cookies.get("userId")?.value || "";
 
- /*  if (isIdAvailable && isPublicPages) {
+  if (isPublicPages && isIdAvailable) {
+    console.log("first", isIdAvailable);
+
     return NextResponse.redirect(new URL("/home", request.nextUrl));
   }
 
-  if (!isIdAvailable && isPrivatePages) {
+  if (isPrivatePages && !isIdAvailable) {
+    console.log("second", isIdAvailable);
+
     return NextResponse.redirect(new URL("/signin", request.nextUrl));
-  } */
+  }
 }
 
 export const config = {

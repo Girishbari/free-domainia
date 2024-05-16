@@ -9,8 +9,10 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import { parseCookies } from "nookies";
 
 export default function Component() {
+  const cookies = parseCookies();
   const [currentInfo, setCurrentInfo] = useState([]);
   const [loading, setLoading] = useState<boolean>();
   useEffect(() => {
@@ -20,8 +22,8 @@ export default function Component() {
   const getDetails = async () => {
     try {
       setLoading(true);
-      const resp = await axios.post(`http://localhost:9000/getprojects`, {
-        id: localStorage.getItem("userId"),
+      const resp = await axios.post(`${process.env.BACKEND_URL}/getprojects`, {
+        id: cookies["userId"],
       });
       if (!resp) throw new Error();
       console.log(resp.data);
@@ -49,32 +51,20 @@ export default function Component() {
             </TableHeader>
             <TableBody>
               <TableRow key={1}>
-                <TableCell>1</TableCell>
                 <TableCell>Project A</TableCell>
                 <TableCell>https://example.com/projectA</TableCell>
+                <TableCell>none</TableCell>
                 <TableCell>In Progress</TableCell>
               </TableRow>
-              <TableRow key={2}>
-                <TableCell>2</TableCell>
-                <TableCell>Project B</TableCell>
-                <TableCell>https://example.com/projectB</TableCell>
-                <TableCell>Completed</TableCell>
-              </TableRow>
-              <TableRow key={3}>
-                <TableCell>3</TableCell>
-                <TableCell>Project C</TableCell>
-                <TableCell>https://example.com/projectC</TableCell>
-                <TableCell>Paused</TableCell>
-              </TableRow>
 
-              {/*   {currentInfo?.map((project) => (
-              <TableRow key={project.id}>
-                <TableCell>{project.projectId}</TableCell>
-                <TableCell>Nan</TableCell>
-                <TableCell>Nan</TableCell>
-                <TableCell>{project.status}</TableCell>
-              </TableRow>
-            ))} */}
+              {currentInfo?.map((project: any) => (
+                <TableRow key={project.id}>
+                  <TableCell>{project.projectId}</TableCell>
+                  <TableCell>Nan</TableCell>
+                  <TableCell>Nan</TableCell>
+                  <TableCell>{project.status}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>

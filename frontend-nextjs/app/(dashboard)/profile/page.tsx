@@ -20,15 +20,15 @@ export default function Component() {
     bio: string | "software engineer at Free-domainia";
   }>({
     userId: cookies["userId"],
-    email: localStorage.getItem("email")!,
-    bio: localStorage.getItem("bio")!,
-    username: localStorage.getItem("username")!,
+    username: "name",
+    email: "email",
+    bio: "",
   });
   const [info, setInfo] = useState({
     userId: cookies["userId"],
-    email: localStorage.getItem("email")!,
-    bio: localStorage.getItem("bio")!,
-    username: localStorage.getItem("username")!,
+    email: "",
+    bio: "",
+    username: "",
   });
   const [passwordData, setPasswordData] = useState({
     userId: cookies["userId"],
@@ -38,8 +38,25 @@ export default function Component() {
   const [loading, setLoading] = useState<boolean>(false);
   const [loading2, setLoading2] = useState<boolean>(false);
 
+  useEffect(() => {
+    setCurentInfo({
+      ...currentInfo,
+      userId: cookies["userId"],
+      email: localStorage.getItem("email")!,
+      bio: localStorage.getItem("bio")!,
+      username: localStorage.getItem("username")!,
+    });
+    setInfo({
+      userId: cookies["userId"],
+      email: localStorage.getItem("email")!,
+      bio: localStorage.getItem("bio")!,
+      username: localStorage.getItem("username")!,
+    });
+  }, []);
+
   const handleInfo = useCallback(async () => {
     try {
+      setLoading2(true);
       const resp = await axios.post(
         `${process.env.BACKEND_URL}/updateinfo`,
         info
@@ -121,7 +138,7 @@ export default function Component() {
                     onChange={(e) =>
                       setInfo({
                         ...info,
-                        username: e.target.value,
+                        email: e.target.value,
                       })
                     }
                   />
@@ -136,7 +153,7 @@ export default function Component() {
                   onChange={(e) =>
                     setInfo({
                       ...info,
-                      username: e.target.value,
+                      bio: e.target.value,
                     })
                   }
                 />
@@ -146,7 +163,7 @@ export default function Component() {
                   {" "}
                   {loading2 ? (
                     <>
-                      <Loader2 className="mr-2" /> sigin
+                      <Loader2 className="mr-2" /> Save
                     </>
                   ) : (
                     "Save"
@@ -192,7 +209,7 @@ export default function Component() {
                 <Button onClick={handlePassword} disabled={loading}>
                   {loading ? (
                     <>
-                      <Loader2 className="mr-2" /> sigin
+                      <Loader2 className="mr-2" /> Save
                     </>
                   ) : (
                     "Save"

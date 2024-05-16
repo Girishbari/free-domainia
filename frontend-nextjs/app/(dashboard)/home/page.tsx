@@ -35,7 +35,7 @@ export default function Deploy() {
       }
       setUploading(true);
       try {
-        const res = await axios.post(`${BACKEND_UPLOAD_URL}/deploy`, {
+        const res = await axios.post(`${process.env.BACKEND_URL}/deploy`, {
           repoUrl: repoUrl,
           id: cookies["userId"],
         });
@@ -47,7 +47,7 @@ export default function Deploy() {
         setUploading(false);
         const interval = setInterval(async () => {
           const response = await axios.get(
-            `${BACKEND_UPLOAD_URL}/status?id=${res.data.projectId}&userId=${cookies["userId"]}`
+            `${process.env.BACKEND_URL}/status?id=${res.data.projectId}&userId=${cookies["userId"]}`
           );
 
           if (response.data.status === "deployed") {
@@ -81,13 +81,13 @@ export default function Deploy() {
             duration: 1,
             ease: "easeInOut",
           }}
-          className="mt-30 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-normal text-transparent md:text-5xl"
+          className=" bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl font-medium tracking-normal text-transparent md:text-5xl"
         >
           Github Link <br />
           <Card className="w-full max-w-md">
             <CardHeader>
               <CardTitle className="text-xl">
-                Deploy your GitHub Repository
+                Deploy your React Project
               </CardTitle>
               <CardDescription>
                 Enter the URL of your GitHub repository to deploy it
@@ -122,7 +122,7 @@ export default function Deploy() {
         </motion.h1>
       </LampContainer>
       {deployed && (
-        <Card className="w-full max-w-md mt-8">
+        <Card className="w-full max-w-sm ">
           <CardHeader>
             <CardTitle className="text-xl">Deployment Status</CardTitle>
             <CardDescription>
