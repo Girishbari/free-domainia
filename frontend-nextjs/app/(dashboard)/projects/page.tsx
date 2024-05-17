@@ -61,8 +61,8 @@ export default function Component() {
               {currentInfo?.map((project: any) => (
                 <TableRow key={project.id}>
                   <TableCell>{project.projectId}</TableCell>
-                  <TableCell>Nan</TableCell>
-                  <TableCell>Nan</TableCell>
+                  <TableCell>{"https://test.girishdev.online"}</TableCell>
+                  <TableCell>Free</TableCell>
                   <TableCell>{project.status}</TableCell>
                 </TableRow>
               ))}
