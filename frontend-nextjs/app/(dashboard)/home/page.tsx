@@ -136,12 +136,15 @@ export default function Deploy() {
                 id="deployed-url"
                 readOnly
                 type="url"
-                value={`https://test.girishdev.online`}
+                value={`http://${uploadId}.freedomainia.com:3001/index.html`}
               />
             </div>
             <br />
             <Button className="w-full" variant="outline">
-              <a href={`https://test.girishdev.online`} target="_blank">
+              <a
+                href={`http://${uploadId}.freedomainia.com:3001/index.html`}
+                target="_blank"
+              >
                 Visit Website
               </a>
             </Button>

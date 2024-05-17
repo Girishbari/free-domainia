@@ -9,19 +9,22 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import { parseCookies } from "nookies";
 
 export default function Component() {
+  const cookies = parseCookies();
   const [currentInfo, setCurrentInfo] = useState([]);
   const [loading, setLoading] = useState<boolean>();
   useEffect(() => {
     getDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getDetails = async () => {
+  const getDetails = useCallback(async () => {
     try {
       setLoading(true);
       const resp = await axios.post(`${process.env.BACKEND_URL}/getprojects`, {
-        id: localStorage.getItem("userId"),
+        id: cookies["userId"],
       });
       if (!resp) throw new Error();
       console.log(resp.data);
@@ -31,7 +34,7 @@ export default function Component() {
       console.log(error);
       setLoading(false);
     }
-  };
+  }, [cookies]);
 
   return (
     <div className="w-full h-screen  bg-slate-950">
