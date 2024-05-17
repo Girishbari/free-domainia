@@ -9,10 +9,8 @@ import {
 } from "@/components/ui/table";
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { parseCookies } from "nookies";
 
 export default function Component() {
-  const cookies = parseCookies();
   const [currentInfo, setCurrentInfo] = useState([]);
   const [loading, setLoading] = useState<boolean>();
   useEffect(() => {
@@ -23,7 +21,7 @@ export default function Component() {
     try {
       setLoading(true);
       const resp = await axios.post(`${process.env.BACKEND_URL}/getprojects`, {
-        id: cookies["userId"],
+        id: localStorage.getItem("userId"),
       });
       if (!resp) throw new Error();
       console.log(resp.data);
