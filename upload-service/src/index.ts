@@ -18,7 +18,7 @@ import { PrismaClient } from "@prisma/client";
 import "dotenv/config";
 
 const publisher = createClient({
-  url: "rediss://default:AVNS_7MG9qDXqpEBS-F7gHxr@free-domainia-verce.d.aivencloud.com:15257",
+  url: process.env.redisurl,
 });
 publisher.connect();
 

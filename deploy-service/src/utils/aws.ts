@@ -14,8 +14,8 @@ let s3: any;
 if (process.env.accessKeyId && process.env.secretAccessKey) {
   s3 = new S3Client({
     credentials: {
-      accessKeyId: "AKIA5FTY7AUERQBQCNGI",
-      secretAccessKey: "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",
+      accessKeyId: process.env.accessKeyId.secretAccessKey,
+      secretAccessKey: process.env.accessKeyId.secretAccessKey,
     },
   });
 }
