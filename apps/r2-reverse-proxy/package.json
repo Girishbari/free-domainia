@@ -1,0 +1,27 @@
+{
+  "name": "r2-reverse-proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node index.ts",
+    "watch": "tsc-watch --onSuccess \"node dist/index.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "ts-node": "^10.9.2",
+    "tsc-watch": "^6.2.1",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.147",
+    "@types/http-proxy": "^1.17.16",
+    "aws-lambda": "^1.0.7",
+    "http-proxy": "^1.18.1"
+  }
+}

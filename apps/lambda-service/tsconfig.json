@@ -1,0 +1,15 @@
+{
+  // remove module CommonJS for lambda code
+  "compilerOptions": {
+    "target": "ES2016",
+    "rootDir": "./",
+    "outDir": "dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": false,
+    "noEmitHelpers": true,
+    "downlevelIteration": false
+  }
+}
