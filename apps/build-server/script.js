@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const mime = require("mime-types");
 const Redis = require("ioredis");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 const publisher = new Redis(
   `${process.env.REDIS_URL || "redis://localhost:6379"}`
